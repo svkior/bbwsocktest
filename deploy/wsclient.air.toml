@@ -1,0 +1,34 @@
+root = "."
+testdata_dir = "data"
+tmp_dir = "tmp"
+
+
+[build]
+    bin = "./tmp/wsclient"
+    cmd = "go build -o ./tmp/wsclient ./cmd/wsclient"
+    delay = 1000
+    expclude_dir = ["tmp","data", "deploy"]
+    exclude_file = []
+    exclude_regex = ["_test.go"]
+    exclude_unchanged = false
+    include_ext = ["go"]
+    kill_delay = "0s"
+    log = "./tmp/build-errors.log"
+    send_interrupt = false
+    stop_on_error = true
+
+[color]
+  app = ""
+  build = "yellow"
+  main = "magenta"
+  runner = "green"
+  watcher = "cyan"
+
+[log]
+    time = false
+
+[misc]
+    clean_on_exit = false
+
+[screen]
+    crear_on_rebuild = false
