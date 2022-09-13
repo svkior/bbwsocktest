@@ -30,7 +30,7 @@ func main() {
 	})
 
 	// Starting the waiting goroutine for terminate goroutine
-	c := make(chan os.Signal)
+	c := make(chan os.Signal, 1)
 	signal.Notify(c, os.Interrupt)
 	g.Go(func() error {
 		<-c

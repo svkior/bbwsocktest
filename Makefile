@@ -22,6 +22,16 @@ watch-wsclient: create-network## start wsclient in autoreload mode
 		--workdir="/project" \
 		localhost:5000/air -c deploy/wsclient.air.toml
 
+.PHONY: lint
+lint: ## Lint all golang code
+	docker run --rm \
+		-v ${PWD}:/project \
+		-v golang-cache-vol:/go/pkg/mod \
+		-v go-build-vol:/root/.cache/go-build \
+		--workdir="/project" \
+		--entrypoint=golangci-lint \
+		localhost:5000/air run -v ./...
+
 .PHONY: help
 help: ## Print this help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'

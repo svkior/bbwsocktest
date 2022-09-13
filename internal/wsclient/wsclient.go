@@ -42,14 +42,6 @@ func (c *wsClient) Init(ctx context.Context) error {
 		return nil
 	})
 
-	g.Go(func() error {
-		log.Printf("Starting ws client")
-		select {
-		case <-ctx.Done():
-			return nil
-		}
-	})
-
 	err := g.Wait()
 	if err != nil {
 		log.Printf("Error running WebSockets")
@@ -101,6 +93,9 @@ func (c *wsClient) Run(ctx context.Context) error {
 			}
 			id++
 			b, err := json.Marshal(req)
+			if err != nil {
+				return err
+			}
 			log.Printf("Sending to WS %s", b)
 			err = conn.WriteMessage(websocket.TextMessage, b)
 			if err != nil {
